@@ -1,0 +1,8 @@
+.bg-dark {
+  border-bottom: 5px solid rgb(226, 161, 11);
+}
+
+.navbar-brand,
+.nav-link {
+  color: #fff !important;
+}
