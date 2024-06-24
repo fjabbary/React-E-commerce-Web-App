@@ -4,10 +4,14 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
-function AddCustomer() {
+function EditCustomer() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const location = useLocation();
+  const { name, email, phone } = location.state || {};
+  const customerToUpdate = { name, email, phone };
 
   const [newCustomer, setNewCustomer] = useState({
     name: "",
@@ -17,6 +21,10 @@ function AddCustomer() {
 
   const [feedback, setFeedback] = useState("");
   const [validated, setValidated] = useState(false);
+
+  useEffect(() => {
+    setNewCustomer(customerToUpdate);
+  }, []);
 
   const handleChange = (e) => {
     setNewCustomer({ ...newCustomer, [e.target.name]: e.target.value });
@@ -30,8 +38,8 @@ function AddCustomer() {
       event.stopPropagation();
       setValidated(true);
     } else {
-      const response = await axios.post(
-        "http://localhost:5000/customers",
+      const response = await axios.put(
+        `http://localhost:5000/customers/${id}`,
         newCustomer,
         {
           headers: { "Content-Type": "application/json" },
@@ -48,7 +56,7 @@ function AddCustomer() {
 
   return (
     <div className="w-50 mx-auto mt-5 border p-5 bg-light">
-      <h2>Add Customer</h2>
+      <h2>Edit Customer</h2>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>Full Name</Form.Label>
@@ -99,8 +107,8 @@ function AddCustomer() {
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Button variant="outline-success" type="submit">
-          <b>Add Customer</b>
+        <Button variant="outline-warning" type="submit">
+          <b>Update Customer</b>
         </Button>
       </Form>
 
@@ -113,4 +121,4 @@ function AddCustomer() {
   );
 }
 
-export default AddCustomer;
+export default EditCustomer;
