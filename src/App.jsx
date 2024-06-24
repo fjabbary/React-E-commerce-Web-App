@@ -8,6 +8,10 @@ import CustomerDetails from "./components/Customer/CustomerDetails";
 import EditCustomer from "./components/Customer/EditCustomer";
 
 import { Routes, Route } from "react-router-dom";
+import Products from "./components/Products/Products";
+import AddProduct from "./components/Products/AddProduct";
+import ProductDetails from "./components/Products/ProductDetails";
+import EditProduct from "./components/Products/EditProduct";
 
 function App() {
   return (
@@ -19,6 +23,11 @@ function App() {
         <Route path="/customer/add" element={<AddCustomer />} />
         <Route path="/customer/:id" element={<CustomerDetails />} />
         <Route path="/customer/edit/:id" element={<EditCustomer />} />
+
+        <Route path="/products" element={<Products />} />
+        <Route path="/product/add" element={<AddProduct />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/product/edit/:id" element={<EditProduct />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

@@ -17,16 +17,22 @@ function Navigation() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse>
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/" className="mx-lg-4">
-              Home
-            </Nav.Link>
-
-            <NavDropdown title="Manage Customer">
+            {/* <Nav.Link as={Link} to="/" className="mx-lg-4"> Home </Nav.Link> */}
+            <NavDropdown title="Manage Customer" className="mx-2">
               <NavDropdown.Item to="/customers" as={Link}>
                 View Customers
               </NavDropdown.Item>
               <NavDropdown.Item to="/customer/add" as={Link}>
-                Add/Edit Customer
+                Add Customer
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown title="Manage Products" className="mx-2">
+              <NavDropdown.Item to="/products" as={Link}>
+                View Products
+              </NavDropdown.Item>
+              <NavDropdown.Item to="/product/add" as={Link}>
+                Add Product
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

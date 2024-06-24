@@ -16,6 +16,10 @@ body {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(255, 255, 255)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
 }
 
+.navbar-nav .dropdown-item:hover {
+  background: rgb(244, 194, 76);
+}
+
 .home,
 .customer-details {
   margin-top: 100px;
@@ -35,4 +39,9 @@ i.bi {
 
 .customer-details .order-info {
   background: rgb(249, 227, 186);
+}
+
+/* =============== */
+.products img {
+  height: 200px;
 }
