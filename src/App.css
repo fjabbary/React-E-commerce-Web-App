@@ -45,3 +45,13 @@ i.bi {
 .products img {
   height: 200px;
 }
+
+.products .card {
+  position: relative;
+}
+
+.products .card #add-to-card {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

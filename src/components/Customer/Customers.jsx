@@ -32,6 +32,13 @@ function Customers() {
             <div>{customer.name}</div>
             <div>
               <Link
+                className="btn btn-sm btn-info me-3"
+                to="/products"
+                state={customer}
+              >
+                Shop Now
+              </Link>
+              <Link
                 className="btn-sm me-3 btn btn-outline-dark"
                 variant="outline-dark"
                 to={`/customer/${customer.customer_id}`}
