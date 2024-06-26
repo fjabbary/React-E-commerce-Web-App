@@ -4,7 +4,43 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 
-const Cart = ({ cartItems, customer }) => {
+import axios from "axios";
+
+const Cart = ({ cartItems, customer, cartOriginalItems }) => {
+  const totalPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
+
+  const todayDate = () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const dd = String(today.getDate()).padStart(2, "0");
+
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+    return formattedDate;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      customer_id: customer.customer_id,
+      date: todayDate(),
+      products: cartOriginalItems,
+    };
+
+    console.log(data);
+    try {
+      await axios.post("http://127.0.0.1:5000/orders", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("success");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <>
       <Card className="mt-5 w-50 mx-auto mb-5">
@@ -34,9 +70,16 @@ const Cart = ({ cartItems, customer }) => {
             ))}
           </ListGroup>
 
-          <Button variant="success" className="mt-5 float-end">
+          <Button
+            variant="success"
+            className="mt-2 float-end"
+            onClick={handleSubmit}
+          >
             Place Order
           </Button>
+          <p className="mt-3 me-5 float-end">
+            <b>Total</b>: ${totalPrice}
+          </p>
         </Card.Body>
       </Card>
     </>

@@ -12,6 +12,7 @@ import Cart from "../Cart";
 function Products() {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [cartOriginalItems, setCartOriginalItems] = useState([]);
   const location = useLocation();
 
   const customer = location.state;
@@ -30,15 +31,12 @@ function Products() {
       (item) => item.product_id === product.product_id
     );
 
-    console.log(existingItem);
-
     if (!existingItem) {
-      console.log("object");
       const newItem = { ...product, qty: 1 };
       setCartItems([...cartItems, newItem]);
+      setCartOriginalItems([...cartOriginalItems, product]);
     } else {
       const updatedProducts = cartItems.map((item) => {
-        console.log("xxx");
         if (item.product_id === product.product_id) {
           return { ...item, qty: item.qty + 1 };
         }
@@ -114,7 +112,11 @@ function Products() {
         ))}
       </Row>
       {cartItems.length > 0 && (
-        <Cart cartItems={cartItems} customer={customer} />
+        <Cart
+          cartItems={cartItems}
+          cartOriginalItems={cartOriginalItems}
+          customer={customer}
+        />
       )}
     </Container>
   );
