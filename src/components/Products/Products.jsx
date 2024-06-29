@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Modal from "react-bootstrap/Modal";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -8,12 +9,16 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link, useLocation } from "react-router-dom";
 import Cart from "../Cart";
+import { useNavigate } from "react-router-dom";
 
 function Products() {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [cartOriginalItems, setCartOriginalItems] = useState([]);
+  const [show, setShow] = useState(false);
+
   const location = useLocation();
+  const navigate = useNavigate();
 
   const customer = location.state;
 
@@ -47,6 +52,11 @@ function Products() {
     }
   };
 
+  const handleClose = () => {
+    setShow(false);
+    navigate("/");
+  };
+
   return (
     <Container className="mt-5 products">
       <Row>
@@ -61,63 +71,83 @@ function Products() {
             <Link to="/customers"> customers page </Link>
           </h3>
         )}
-        {products.map((product) => (
-          <Col key={product.product_id}>
-            <Card style={{ width: "18rem" }} className="mt-5 pb-3">
-              <Card.Img variant="top" src={product.image} alt={product.name} />
-              <Card.Body className="d-flex justify-content-between">
-                <Card.Title>{product.name}</Card.Title>
-                <Card.Text>
-                  <b>Price:</b> ${product.price}
-                </Card.Text>
-              </Card.Body>
-              <Container>
-                <Row>
-                  <Col>
-                    <Button
-                      variant="primary"
-                      className="w-100"
-                      as={Link}
-                      to={`/product/${product.product_id}`}
-                    >
-                      Details
-                    </Button>
-                  </Col>
-                  <Col>
-                    <Button
-                      variant="outline-warning"
-                      className="w-100"
-                      as={Link}
-                      to={`/product/edit/${product.product_id}`}
-                      state={product}
-                    >
-                      Edit
-                    </Button>
-                    {customer && (
+        {products.length > 0 ? (
+          products.map((product) => (
+            <Col key={product.product_id}>
+              <Card style={{ width: "18rem" }} className="mt-5 pb-3">
+                <Card.Img
+                  variant="top"
+                  src={product.image}
+                  alt={product.name}
+                />
+                <Card.Body className="d-flex justify-content-between">
+                  <Card.Title>{product.name}</Card.Title>
+                  <Card.Text>
+                    <b>Price:</b> ${product.price}
+                  </Card.Text>
+                </Card.Body>
+                <Container>
+                  <Row>
+                    <Col>
                       <Button
-                        variant="success"
-                        className="btn-sm"
-                        id="add-to-card"
-                        title="Add to Cart"
-                        onClick={() => handleAddToCart(product)}
+                        variant="primary"
+                        className="w-100"
+                        as={Link}
+                        to={`/product/${product.product_id}`}
                       >
-                        <i className="bi bi-cart4"></i>
+                        Details
                       </Button>
-                    )}
-                  </Col>
-                </Row>
-              </Container>
-            </Card>
-          </Col>
-        ))}
+                    </Col>
+                    <Col>
+                      <Button
+                        variant="outline-warning"
+                        className="w-100"
+                        as={Link}
+                        to={`/product/edit/${product.product_id}`}
+                        state={product}
+                      >
+                        Edit
+                      </Button>
+                      {customer && (
+                        <Button
+                          variant="success"
+                          className="btn-sm"
+                          id="add-to-card"
+                          title="Add to Cart"
+                          onClick={() => handleAddToCart(product)}
+                        >
+                          <i className="bi bi-cart4"></i>
+                        </Button>
+                      )}
+                    </Col>
+                  </Row>
+                </Container>
+              </Card>
+            </Col>
+          ))
+        ) : (
+          <h2 className="text-center mt-5">
+            No product exists. Please add product.
+          </h2>
+        )}
       </Row>
-      {cartItems.length > 0 && (
+      {cartItems.length > 0 && customer?.customer_id && (
         <Cart
           cartItems={cartItems}
           cartOriginalItems={cartOriginalItems}
           customer={customer}
+          setShow={setShow}
         />
       )}
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Body>Order placed successfully!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="warning" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }

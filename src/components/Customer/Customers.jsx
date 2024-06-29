@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
 
 function Customers() {
   const [customers, setCustomers] = useState([]);
@@ -16,8 +17,12 @@ function Customers() {
   }, []);
 
   const deleteCustomer = async (id) => {
-    await axios.delete(`http://localhost:5000/customers/${id}`);
-    setCustomers(customers.filter((customer) => customer.customer_id !== id));
+    try {
+      await axios.delete(`http://localhost:5000/customers/${id}`);
+      setCustomers(customers.filter((customer) => customer.customer_id !== id));
+    } catch (error) {
+      alert("Cannot Delete customer since customer has associated order");
+    }
   };
 
   return (
@@ -67,7 +72,10 @@ function Customers() {
           </ListGroup>
         </div>
       ) : (
-        <h2>Please add customer</h2>
+        <h2 className="text-center">Please add customer</h2>
+        // <Spinner animation="border" role="status">
+        //   {" "}
+        // </Spinner>
       )}
     </div>
   );

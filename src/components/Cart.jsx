@@ -6,7 +6,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 
 import axios from "axios";
 
-const Cart = ({ cartItems, customer, cartOriginalItems }) => {
+const Cart = ({ cartItems, customer, cartOriginalItems, setShow }) => {
   const totalPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
 
   const todayDate = () => {
@@ -28,14 +28,14 @@ const Cart = ({ cartItems, customer, cartOriginalItems }) => {
       products: cartOriginalItems,
     };
 
-    console.log(data);
+    setShow(true);
     try {
       await axios.post("http://127.0.0.1:5000/orders", data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      console.log("success");
+      setShow(true);
     } catch (e) {
       console.log(e);
     }
@@ -46,7 +46,7 @@ const Cart = ({ cartItems, customer, cartOriginalItems }) => {
       <Card className="mt-5 w-50 mx-auto mb-5">
         <Card.Body style={{ backgroundColor: "#f2f0b3" }}>
           <Card.Title>Items in Cart</Card.Title>
-          <Card.Text>Order summary for {customer.name}</Card.Text>
+          <Card.Text>Order summary for {customer?.name}</Card.Text>
 
           <ListGroup>
             {cartItems.map((item) => (

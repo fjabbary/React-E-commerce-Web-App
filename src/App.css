@@ -20,6 +20,14 @@ body {
   background: rgb(244, 194, 76);
 }
 
+.spinner-border {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100px !important;
+  height: 100px !important;
+}
+
 .customer-details {
   margin-top: 100px;
 }
@@ -37,7 +45,7 @@ i.bi {
 }
 
 .customer-details .order-info {
-  background: rgb(249, 227, 186);
+  background: rgb(230, 234, 255);
 }
 
 /* =============== */
@@ -53,4 +61,12 @@ i.bi {
   position: absolute;
   right: 10px;
   top: 10px;
+}
+
+.order-pending {
+  background-color: rgb(20, 206, 20);
+}
+
+.order-cancelled {
+  background-color: rgb(255, 95, 95);
 }

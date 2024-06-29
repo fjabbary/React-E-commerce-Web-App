@@ -35,6 +35,15 @@ function Navigation() {
                 Add Product
               </NavDropdown.Item>
             </NavDropdown>
+
+            <NavDropdown title="Manage Orders" className="mx-2">
+              <NavDropdown.Item to="/orders" as={Link}>
+                View Orders
+              </NavDropdown.Item>
+              {/* <NavDropdown.Item to="#" as={Link}>
+                #
+              </NavDropdown.Item> */}
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -12,6 +12,7 @@ import Products from "./components/Products/Products";
 import AddProduct from "./components/Products/AddProduct";
 import ProductDetails from "./components/Products/ProductDetails";
 import EditProduct from "./components/Products/EditProduct";
+import Orders from "./components/Orders/Orders";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
         <Route path="/product/add" element={<AddProduct />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/product/edit/:id" element={<EditProduct />} />
+
+        <Route path="/orders" element={<Orders />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

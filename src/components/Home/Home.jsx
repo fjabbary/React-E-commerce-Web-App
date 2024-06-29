@@ -15,7 +15,12 @@ function Home() {
     >
       <h2 style={{ paddingTop: "100px" }}>Welcome to E-commerce website!</h2>
 
-      <Button as={Link} to="/customers">
+      <Button
+        as={Link}
+        to="/customers"
+        variant="warning"
+        className="btn btn-lg"
+      >
         Shop Now
       </Button>
     </div>
